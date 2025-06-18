@@ -1,17 +1,17 @@
-INSERT INTO app_user
-(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
-VALUES
-(1, 'address line 1', false, 'manish@gmail.com', 'Manish', 'Ratnawat', '123', '060123456', 1, 'manish29329');
-
-INSERT INTO app_user
-(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
-VALUES
-(2, 'address line 2', false, 'admin@gmail.com', 'John', 'Doe', '123', '0611234321', 0, 'John29329');
-
-INSERT INTO app_user
-(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
-VALUES
-(3, 'address line 3', false, 'ashish@gmail.com', 'Ashish', 'kumar', '123', '0611234321', 2, 'ashish29329');
+--INSERT INTO app_user
+--(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
+--VALUES
+--(1, 'address line 1', false, 'manish@gmail.com', 'Manish', 'Ratnawat', '12345678', '060123456', 1, 'manish29329');
+--
+--INSERT INTO app_user
+--(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
+--VALUES
+--(2, 'address line 2', false, 'admin@gmail.com', 'John', 'Doe', '12345678', '0611234321', 0, 'John29329');
+--
+--INSERT INTO app_user
+--(id, address, deleted, email, first_name, last_name, password, phone_number, role, username)
+--VALUES
+--(3, 'address line 3', false, 'ashish@gmail.com', 'Ashish', 'kumar', '12345678', '0611234321', 2, 'ashish29329');
 
 --
 --
