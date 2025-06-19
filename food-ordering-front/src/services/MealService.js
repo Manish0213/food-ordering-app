@@ -5,75 +5,74 @@ class MealService{
 
     getAllMeals(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/meal/getAllMeals");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/meal/getAllMeals`);
     }
 
     createMeal(fd){
         TokenService.setTokenInHeader();
-        return axios.post("https://food-ordering-app-6u2x.onrender.com/api/meal/createMeal", fd);
+        return axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/meal/createMeal`, fd);
     }
 
     deleteMeal(mealId){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/meal/deleteMeal/" + mealId);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/meal/deleteMeal/` + mealId);
     }
 
     getAllMealTypes(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/mealType/getAllMealTypes");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/mealType/getAllMealTypes`);
     }
 
     updateMeal(meal){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/meal/updateMeal", meal);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/meal/updateMeal`, meal);
     }
 
     getMealsByMealTypeId(mealTypeId){
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/meal/getMealsByMealTypeId/" + mealTypeId);
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/meal/getMealsByMealTypeId/` + mealTypeId);
     }
 
     sendItemsForFinalOrder(itemsFromCartFinalOrder){
-        // jedino ako je korisnik ulogovan, stavlja se token u header-u
         TokenService.setTokenInHeader();
-        return axios.post("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/createFinalOrder", itemsFromCartFinalOrder); 
+        return axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/createFinalOrder`, itemsFromCartFinalOrder); 
     }
 
     getFinalOrderById(finalOrderId){
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getFinalOrderById/" + finalOrderId);
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getFinalOrderById/` + finalOrderId);
     }
 
     getOrderItemsByFinalOrderId(finalOrderId){
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getOrderItemsByFinalOrderId/" + finalOrderId);
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getOrderItemsByFinalOrderId/` + finalOrderId);
     }
 
     getAllActiveFinalOrders(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getAllActiveFinalOrders");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getAllActiveFinalOrders`);
     }
     
     getAllDeliveredFinalOrders(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getAllDeliveredFinalOrders");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getAllDeliveredFinalOrders`);
     }
 
     getMyActiveFinalOrders(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getAllMyActiveFinalOrders");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getAllMyActiveFinalOrders`);
     }
 
     getMyDeliveredFinalOrders(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/getAllMyDeliveredFinalOrders");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/getAllMyDeliveredFinalOrders`);
     }
 
    changeFinalOrderStatus(finalOrderWithStatusAndId){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/changeStatus", finalOrderWithStatusAndId);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/changeStatus`, finalOrderWithStatusAndId);
     }
 
     deleteFinalOrder(finalOrderId){
         TokenService.setTokenInHeader();
-        return axios.delete("https://food-ordering-app-6u2x.onrender.com/api/finalOrder/deleteFinalOrder/" + finalOrderId);
+        return axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/finalOrder/deleteFinalOrder/` + finalOrderId);
     }
 
 }

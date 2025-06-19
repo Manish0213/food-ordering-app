@@ -49,6 +49,8 @@ const ListMealTypeComponent = () => {
         setShow(false);
         mealType.setTypeName('');
         mealType.setDescription('');
+        //something to be edited
+        setSelectedFile(undefined);
         }
 
     const handleCloseEdit = () => {
@@ -56,6 +58,7 @@ const ListMealTypeComponent = () => {
         //meal.setId(0);
         mealType.setTypeName('');
         mealType.setDescription('');
+        setSelectedFile(undefined);
         }
 
     const handleShow = () => {
@@ -74,10 +77,19 @@ const ListMealTypeComponent = () => {
         if(mealType.typeName.trim() === "" || mealType.description.trim() === ""){
             alert("Invalid input");
         }
-        MealTypeService.updateMealType(mealType).then((response) =>{
+        if(selectedFile != null && selectedFile != undefined){
+            fd.append('image', selectedFile);
+            fd.append('mealType', JSON.stringify(mealType));
+            console.log("Selected fileeee" + selectedFile);
+        }
+       else{
+            fd.append('image', '');
+            fd.append('mealType', JSON.stringify(mealType));
+       }
+        MealTypeService.updateMealType(fd).then((response) =>{
             const responseFromServer = response.data;
             if(responseFromServer == "success"){
-                alert("Uspesno editovano");
+                alert("Successfully Edited");
                 handleCloseEdit();
                 getAllMealTypes();   
             }
@@ -88,6 +100,7 @@ const ListMealTypeComponent = () => {
         if(mealType.typeName.trim() === "" || mealType.description.trim() === ""){
             alert("Invalid input");
         }
+        console.log("mealType",mealType);
         if(selectedFile != null && selectedFile != undefined){
             fd.append('image', selectedFile);
             fd.append('mealType', JSON.stringify(mealType));
@@ -112,7 +125,6 @@ const ListMealTypeComponent = () => {
             }
         })
     }
-
 
     const deleteMealType = (mealTypeId) =>{
         MealTypeService.deleteMealType(mealTypeId).then((response) =>{
@@ -159,7 +171,7 @@ const ListMealTypeComponent = () => {
                         <th className='theadth'>Action</th>                   
                     </tr>
                 </thead>
-                {/*mora src={"data:image/png;base64," + meal.image}, ne moze samo src={meal.image}  */}
+                
                 <tbody>
                     {mealTypes.map(
                         mealType => <tr key={mealType.id}>

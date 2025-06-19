@@ -19,7 +19,7 @@ const ItemsByFinalOrderIdComponent = (props) => {
                         <th>Quantity</th>
                     </tr>
                 </thead>
-                {/*mora src={"data:image/png;base64," + meal.image}, ne moze samo src={meal.image}  */}
+                
                 <tbody>
                     {orderItems.map(
                         orderItem => <tr key={orderItem.mealId}>

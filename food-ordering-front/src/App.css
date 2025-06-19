@@ -72,11 +72,11 @@ button{
 }
 
 .swal2-confirm.swal2-styled.swal2-default-outline{
-  background-color: #198754 !important; /* yes button na swal alertu, ne treba na ovaj nacin, ali radi okej. */
+  background-color: #198754 !important; 
 }
 
 .swal2-title{
-  font-weight: 500 !important; /* bude po defaultu 600 izgleda sada iz nekog razloga, kao da je pre bio 500, pa sad stavljam da bude isto kao pre */
+  font-weight: 500 !important; 
 }
 
 

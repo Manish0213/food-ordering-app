@@ -94,7 +94,7 @@ const MyProfileComponent = () => {
     }
 
     const handleSubmitChangePass = () =>{
-        //validacija unosa
+        
         if(oldPassword.trim() === '' || newPassword.trim()===0 ){
             alertInvalid("Invalid input, make sure everything is filed correctly and try again!")
         }
@@ -114,7 +114,7 @@ const MyProfileComponent = () => {
     }
 
     const handleSubmit = () => {
-        //validacija unosa
+        
         console.log(firstNameEdit + " " + lastNameEdit + " " + emailEdit + " " + usernameEdit + " " + phoneNumberEdit + " " + addressEdit)
         if(firstNameEdit.trim() === '' || lastNameEdit.trim() === ''
             || emailEdit.trim() === '' || usernameEdit.trim() === '' 
@@ -172,11 +172,7 @@ const MyProfileComponent = () => {
       }
 
       const isValidNumber = (input) => {
-        // ^\d{5,}$: Uses a regular expression to ensure that the input consists of at least 5 digits. 
-        // Here's a breakdown:
-        // ^: Asserts the start of the string.
-        // \d{5,}: Matches at least 5 digits (\d is a shorthand for a digit, and {5,} means at least 5 occurrences).
-        // $: Asserts the end of the string.
+        
         if(isNaN(input) || /^\d{5,}$/.test(input) === false){
           return false;
         }
@@ -334,7 +330,6 @@ const MyProfileComponent = () => {
         </Modal.Footer>
     </Modal>
 
-     {/* NE MOZE MODAL.DIALOG, MORA MODAL SAMO */}
      <Modal show={showPassModal} onHide={handleClosePassModal} dialogClassName="modalEditPassword" className="d-flex align-items-center justify-content-center">
         <Modal.Header closeButton>
         <Modal.Title>Edit password</Modal.Title>

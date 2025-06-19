@@ -13,7 +13,6 @@ const EditItemQuantityComponent = (props) => {
     <div className='meal-info-container'>
       <div className='meal-container'>
           <label className='label-meal-info'>Meal:</label>
-          {/* mora ovako sa ? inace puca cim se zatvori modal, jer se vrv setuje item na null a onda renderuje u modalu ponovo, ili bih mogao da proverim da li je itemFromCart != null   */}
           <label className='label-meal-value'>{itemFromCart?.mealName}</label>
       </div>
 
@@ -28,8 +27,6 @@ const EditItemQuantityComponent = (props) => {
             className='btn-decrease'
             type="button"
             onClick={() => {
-              // Decrease the value by 1, but not below 1
-              // u sustini poredi vrednosti koja je veca pa nju vraca, ispod 1 nece moci da se setuje
               const newValue = Math.max(1, itemQuantity - 1);
               setItemQuantity(newValue);
             }}

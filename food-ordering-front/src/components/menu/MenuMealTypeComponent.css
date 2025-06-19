@@ -22,7 +22,7 @@
     border-radius: 20px;
     /*padding: 10px 10px; */
     padding-bottom: 20px;
-    transition:  all .2s ease-in-out; /* mora da ovde stoji a ne u hover, jer kad se skloni nema izlaznog trasitiona */
+    transition:  all .2s ease-in-out; 
     background-color: rgb(245, 245, 245); 
     box-shadow: 0 0 16px 0 rgb(0,0, 0, 0.6);
     
@@ -82,7 +82,7 @@
 }
 
 @media(max-width: 900px){
-    /* i u list meal by meal type nasledi ovo za mobile screen size */
+    
     .card-meal-type{
         width: 85%;
     }

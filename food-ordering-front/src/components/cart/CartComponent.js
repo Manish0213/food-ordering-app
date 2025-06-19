@@ -32,7 +32,6 @@ const CartComponent = () => {
 
   let itemsFromCartData;
 
-  //ako nije ulogovan mora da unese adresu i br telefona
   
   const itemObjToStore = { item, itemQuantity}
 
@@ -42,7 +41,7 @@ const CartComponent = () => {
 
     const handleShowEdit = (itemFromCart) => {
         setShowEdit(true);
-        setId(null); //mora ovako da se setuje, kada se vrsi izmena, nakon toga zapamti id od starog pa radi izmenu
+        setId(null);
         setItem(itemFromCart);
         setItemQuantity(itemFromCart.quantity)
     };
@@ -74,7 +73,7 @@ const CartComponent = () => {
       }
          
       const submitFinalOrder = () =>{
-        //moze i bez ove provere za token jer svakako ova metoda se poziva samo nakon unosenja adrese i broja telefona u modalu kada korisnik nije ulogovan
+
         if((localStorage.token === null || localStorage.token === undefined) && (address.trim() === "" || phoneNumber.trim() === "")){
           alertInvalidInput("Invalid input, please insert address and phone number");
         }
@@ -163,10 +162,10 @@ const CartComponent = () => {
       const sendFinalOrderAndHandleRepsonseFromServer = (finalOrderDetails) =>{
         MealService.sendItemsForFinalOrder(finalOrderDetails).then((response) =>{
           const responseFromServer = response.data;
-          //ako je response razlicit od 0, znaci da je uspesno upisan final order i prosledjen id, po defaultu je 0
+          
           if(responseFromServer != 0){
               dispatch(deleteAllItems());
-              // bude undefined u stvari, null == undefined ce biti true, null === undefined je false. mogu i proveriti samo sa == null
+              
               if(localStorage.token === null || localStorage.token === undefined){
                 handleCloseInsertDetails();
                 alertFinalOrderStringCheckInfo(responseFromServer);

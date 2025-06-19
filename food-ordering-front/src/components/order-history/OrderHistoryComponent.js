@@ -109,7 +109,7 @@ const OrderHistoryComponent = () => {
                     {localStorage.role === "ADMIN" && <th className='theadth'>Action</th>}
                 </tr>
             </thead>
-            {/*mora src={"data:image/png;base64," + meal.image}, ne moze samo src={meal.image}  */}
+            
             <tbody>
                 {allDeliveredFinalOrders.map(
                     activeFinalOrder => <tr key={activeFinalOrder.id}>

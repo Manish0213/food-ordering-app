@@ -13,7 +13,7 @@ export const ActiveFinalOrdersComponent = () => {
     const [allActiveFinalOrders, setAllActiveFinalOrders] = useState([]);
     const [orderItemsByFinalOrderId, setOrderItemsByFinalOrderId] = useState([]);
     const [show, setShow] = useState(false);
-    //proba
+   
     const [status, setStatus] = useState('');
     const [activeOrderId, setActiveOrderId] = useState(1);
 
@@ -52,8 +52,8 @@ export const ActiveFinalOrdersComponent = () => {
 
     const changeFinalOrderStatus = (activeFinalOrderId, status) =>{
         setStatus(status);
-        activeOrderIdLet = activeFinalOrderId; // OVAKO SAM MORAO DA NE PAMTI VREDNOST OD PRETHODNOG
-        // setActiveOrderId(activeFinalOrderId); ZASTO PAMTI VREDNOST PRETHODNOG ??? 
+        activeOrderIdLet = activeFinalOrderId; 
+        
         const finalOrderWithStatusAndId = { activeOrderId: activeOrderIdLet, status };
         MealService.changeFinalOrderStatus(finalOrderWithStatusAndId).then((response)=>{
             const responseFromServer = response.data;

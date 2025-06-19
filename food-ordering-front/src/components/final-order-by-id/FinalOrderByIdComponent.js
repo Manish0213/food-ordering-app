@@ -11,23 +11,19 @@ const FinalOrderByIdComponent = () => {
 
     const {id} = useParams();
     const [orderItemsByFinalOrderId, setOrderItemsByFinalOrderId] = useState([]);
-    const [finalOrder, setFinalOrder] = useState({}); // mora {} ne moze null ili undefined
-    //const orderItemsByFinalOrderIdList = {orderItemsByFinalOrderId}; //nzm jel mora ovako kad hocu da saljem modalu OVAKO NIJE HTELO DA RADI KAD OVO SALJEM MODALU!!!
+    const [finalOrder, setFinalOrder] = useState({}); 
     const [show, setShow] = useState(false);
 
     useEffect(() => {
         getFinalOrderById(id);
-        //alert("FinalOrder kasnije eff" + JSON.stringify(finalOrder));
-        // console.log(JSON.stringify(finalOrder));    
+         
     }, [])
 
     const getFinalOrderById = (id) =>{
         MealService.getFinalOrderById(id).then((response) =>{
             setFinalOrder(response.data);
-            alert("FinalOrder " + JSON.stringify(response.data));           
-            // alert("Setovani order itemsi", JSON.stringify(orderItemsByFinalOrderId));
-        });
-        // alert("FinalOrder kasnije" + JSON.stringify(finalOrder));      
+            alert("FinalOrder " + JSON.stringify(response.data));            
+        });     
     }
     
     const handleShowItemsByFinalOrderId = (finalOrderId) => {      
@@ -43,7 +39,7 @@ const FinalOrderByIdComponent = () => {
     const getOrderItemsByFinalOrderId = (finalOrderId) =>{
         MealService.getOrderItemsByFinalOrderId(finalOrderId).then((response) =>{
             //alert("RESPONSE ORDER ITEMS " + JSON.stringify(response.data));
-            setOrderItemsByFinalOrderId(response.data); //ZASTO NE RADIIII OVO SRANJEEEE          
+            setOrderItemsByFinalOrderId(response.data);       
             console.log('s');
         }).catch(error =>{
             console.log(error);

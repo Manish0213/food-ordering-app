@@ -4,21 +4,21 @@ import TokenService from "./TokenService";
 class MealTypeService{
 
     getAllMealTypes(){
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/mealType/getAllMealTypes");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/mealType/getAllMealTypes`);
     }
     createMealType(fd){
         TokenService.setTokenInHeader();
-        return axios.post("https://food-ordering-app-6u2x.onrender.com/api/mealType/createMealType", fd);
+        return axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/mealType/createMealType`, fd);
     }
 
     deleteMealType(mealTypeId){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/mealType/deleteMealType/" + mealTypeId);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/mealType/deleteMealType/` + mealTypeId);
     }
 
-    updateMealType(mealType){
+    updateMealType(fd){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/mealType/updateMealType", mealType);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/mealType/updateMealType`, fd);
     }
 
 }

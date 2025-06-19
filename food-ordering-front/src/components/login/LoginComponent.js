@@ -28,7 +28,7 @@ const submitLogin = (e) =>{
             alertSuccess("Successfully signed in!");
             localStorage.token = response.data.token;
             const decodedToken = jwt_decode(response.data.token);
-            localStorage.role = decodedToken.role; //stavlja se role u localstorage nakon sto se dekodira pomocu jwt-decode  
+            localStorage.role = decodedToken.role;
             setTimeout(() => navigateDependingOnRole(localStorage.role), 1500);
         }
         else if(responseFromServer === "fail"){
@@ -71,7 +71,7 @@ const alertSuccess = (message) =>{
       text: message,
     })
   }
-//card col-md-6 offset-md-3 offset-md-3' za formu siroko da je, 4 4 4 da je uze i centrirano lepo, ali po vertikali nzm kako da namestim
+
   return (
     <div className='login-main-container'>
      

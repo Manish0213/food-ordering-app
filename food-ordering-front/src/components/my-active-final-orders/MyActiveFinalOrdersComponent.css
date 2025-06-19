@@ -24,8 +24,7 @@
 
     border-radius: 30px !important;
     border: 3px solid; 
-    border-collapse: separate !important; /*mora ovo separate zbog bootstrapa, ne savije border, jer bootstrap setuje na collapse
-    /* border: 10px solid rgb(241, 0, 0) !important da pregazi bootstrapov border */
+    border-collapse: separate !important;
     box-shadow: 0 0 15px 15px rgb(133, 127, 127);
 }
 
@@ -240,8 +239,6 @@
         font-size: 14px;
         font-weight: 400;
         padding: 10px 22px !important;
-        /* white-space: nowrap !important; */
-        /* na 164px tekst bude u istom redu, na 163px vec ne, nzm sto nece sa nowrap da radi, za desktop radi okej, za telefone se prelama samo iz nekog raloga  */
         min-width: 164px;
     }
 

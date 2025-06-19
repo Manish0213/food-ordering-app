@@ -6,51 +6,51 @@ class UserService{
 
     getAllEmployees () {
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/user/getAllEmployees");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/getAllEmployees`);
     }
 
     getAllUsers(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/user/getAllUsers");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/getAllUsers`);
     }
 
     createEmployee(user){
         TokenService.setTokenInHeader();
-        return axios.post("https://food-ordering-app-6u2x.onrender.com/api/user/createEmployee", user);
+        return axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/user/createEmployee`, user);
     }
 
     getEmployeeById(employeeId){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/user/" + employeeId);
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/` + employeeId);
     }
-    //moze i samo employee da se salje, ne mora i id
+    
     updateEmployee(employeeId, employee){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/user/updateUserByIdAndDetails/" + employeeId, employee);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/user/updateUserByIdAndDetails/` + employeeId, employee);
     }
-    //logicko brisanje, setuje se isDeleted na true
+   
     deleteEmployee(employeeId){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/user/deactivateUser/" + employeeId);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/user/deactivateUser/` + employeeId);
     }
 
     registration(user){
-        return axios.post("https://food-ordering-app-6u2x.onrender.com/api/user/registration", user);
+        return axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/user/registration`, user);
     }
 
     getCurrentUser(){
         TokenService.setTokenInHeader();
-        return axios.get("https://food-ordering-app-6u2x.onrender.com/api/user/getCurrentUser");
+        return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/user/getCurrentUser`);
     }
 
     updateUser(user){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/user/updateUser", user);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/user/updateUser`, user);
     }
 
     changePassword(passwordObj){
         TokenService.setTokenInHeader();
-        return axios.put("https://food-ordering-app-6u2x.onrender.com/api/user/changePassword", passwordObj);
+        return axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/user/changePassword`, passwordObj);
     }
 
 }
