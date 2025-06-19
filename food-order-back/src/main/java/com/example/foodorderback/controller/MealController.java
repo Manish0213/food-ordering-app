@@ -76,12 +76,37 @@ public class MealController {
 		}
 	}
 	
-	@RequestMapping(value = "/updateMeal", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> editMeal(@RequestBody Meal meal){
-		String response = mealService.editMeal(meal);
-		return new ResponseEntity<String>(response, HttpStatus.OK);
+//	@RequestMapping(value = "/updateMeal", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<String> editMeal(@RequestBody Meal meal){
+//		String response = mealService.editMeal(meal);
+//		return new ResponseEntity<String>(response, HttpStatus.OK);
+//	}
+
+	@RequestMapping(value = "/updateMeal", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> editMeal(@RequestParam(value = "image", required = false) MultipartFile image,
+										   HttpServletRequest request) {
+		System.out.println(request.getParameter("meal"));
+
+		Gson g = new Gson();
+		Meal meal = g.fromJson(request.getParameter("meal"), Meal.class);
+		System.out.println("MEAL " + meal);
+
+		String response;
+
+		// ✅ Optional image update
+		try {
+			if (image != null && !image.isEmpty()) {
+				meal.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+				meal.setImageName(image.getOriginalFilename());
+			}
+		} catch (IOException e) {
+			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response = mealService.editMeal(meal);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/deleteMeal/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		String responseToClient = mealService.delete(id);;

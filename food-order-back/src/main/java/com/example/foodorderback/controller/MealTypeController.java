@@ -47,7 +47,7 @@ public class MealTypeController {
 			
 		Gson g = new Gson();  
 		MealType mealType = g.fromJson(request.getParameter("mealType"), MealType.class);
-		// ovo bi trebalo u servis da se stavi sve, a ne ovde da stoji		
+
 		String responseToClient;
 		responseToClient = mealTypeService.isValidInput(mealType);
 		if (responseToClient.equals("valid")) {		
@@ -66,13 +66,30 @@ public class MealTypeController {
 		}
 	}
 	
-	@RequestMapping(value = "/updateMealType", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> editMealType(@RequestBody MealType mealType){
-		String response = mealTypeService.editMealType(mealType);
-		return new ResponseEntity<String>(response, HttpStatus.OK);
+//	@RequestMapping(value = "/updateMealType", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<String> editMealType(@RequestBody MealType mealType){
+//		String response = mealTypeService.editMealType(mealType);
+//		return new ResponseEntity<String>(response, HttpStatus.OK);
+//	}
+
+	@RequestMapping(value = "/updateMealType", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> editMealType(@RequestParam("image") MultipartFile image, HttpServletRequest request) {
+		System.out.println(request.getParameter("mealType"));
+		Gson g = new Gson();
+		MealType mealType = g.fromJson(request.getParameter("mealType"), MealType.class);
+		String response;
+		try {
+			mealType.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+			mealType.setImageName(image.getOriginalFilename());
+			response = mealTypeService.editMealType(mealType);
+		} catch (IOException e) {
+			response = "fail";
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	
+
+
+
 	@RequestMapping(value = "/deleteMealType/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		String responseToClient = mealTypeService.delete(id);;

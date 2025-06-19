@@ -2,6 +2,7 @@ package com.example.foodorderback.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,16 +74,42 @@ public class MealTypeServiceImpl implements MealTypeService{
 		return mealType;
 	}
 
+//	@Override
+//	public String editMealType(MealType mealType) {
+//		MealType mt = mealTypeRepository.findById(mealType.getId()).get();
+//		if (isValidInput(mealType).equals("invalid")) {
+//			return "invalid";
+//		}
+//		mt.setTypeName(mealType.getTypeName());
+//		mt.setDescription(mealType.getDescription());
+//		mealTypeRepository.save(mt);
+//		return "success";
+//	}
+
 	@Override
 	public String editMealType(MealType mealType) {
-		MealType mt = mealTypeRepository.findById(mealType.getId()).get();
+		Optional<MealType> optional = mealTypeRepository.findById(mealType.getId());
+		if (!optional.isPresent()) {
+			return "not_found";
+		}
+
+		MealType mt = optional.get();
+
 		if (isValidInput(mealType).equals("invalid")) {
 			return "invalid";
 		}
+
 		mt.setTypeName(mealType.getTypeName());
-		mt.setDescription(mealType.getDescription());	
+		mt.setDescription(mealType.getDescription());
+
+		// ✅ If image is also sent for update (not null)
+		if (mealType.getImage() != null && !mealType.getImage().isEmpty()) {
+			mt.setImage(mealType.getImage()); // base64 string
+			mt.setImageName(mealType.getImageName());
+		}
+
 		mealTypeRepository.save(mt);
 		return "success";
-	}	
+	}
 
 }

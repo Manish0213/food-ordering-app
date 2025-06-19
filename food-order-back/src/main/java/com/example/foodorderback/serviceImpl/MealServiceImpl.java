@@ -3,6 +3,7 @@ package com.example.foodorderback.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,22 +90,53 @@ public class MealServiceImpl implements MealService {
 		return meal;
 	}
 
+//	@Override
+//	public String editMeal(Meal meal) {
+//		Meal m = mealRepository.findById(meal.getId()).get();
+//		if (isValidInput(meal).equals("invalid")) {
+//			return "invalid";
+//		}
+//		try {
+//			m.setPrice(meal.getPrice());
+//			m.setName(meal.getName());
+//			m.setMealType(meal.getMealType());
+//			mealRepository.save(m);
+//			return "success";
+//		} catch (Exception e) {
+//			return "fail";
+//		}
+//
+//	}
+
 	@Override
 	public String editMeal(Meal meal) {
-		Meal m = mealRepository.findById(meal.getId()).get();
+		Optional<Meal> optionalMeal = mealRepository.findById(meal.getId());
+		if (!optionalMeal.isPresent()) {
+			return "not_found";
+		}
+
+		Meal m = optionalMeal.get();
+
 		if (isValidInput(meal).equals("invalid")) {
 			return "invalid";
 		}
+
 		try {
 			m.setPrice(meal.getPrice());
 			m.setName(meal.getName());
 			m.setMealType(meal.getMealType());
+
+			// ✅ Optional image update
+			if (meal.getImage() != null && !meal.getImage().isEmpty()) {
+				m.setImage(meal.getImage());
+				m.setImageName(meal.getImageName());
+			}
+
 			mealRepository.save(m);
 			return "success";
 		} catch (Exception e) {
 			return "fail";
 		}
-		
 	}
 
 }
