@@ -135,7 +135,7 @@ const ListMealByMealTypeComponent = () => {
                         meals.map((meal) => {
                             return (
                                 <div className='card-meals-by-meal-type' key={meal.id}>
-                                    <img className='image' src={`http://localhost:8080/${meal.imagePath}`} alt=''></img>
+                                    <img className='image' src={`${process.env.REACT_APP_API_BASE_URL}/${meal.imagePath}`} alt=''></img>
                                     <div className='name-container'>
                                         <h4 className='name-content'>{meal.name}</h4>
                                     </div>

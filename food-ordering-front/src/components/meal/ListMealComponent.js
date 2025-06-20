@@ -196,7 +196,7 @@ const ListMealComponent = () => {
                             meal => <tr key={meal.id}>
                                 <td className='td-content'>{meal.id}</td>
                                 <td className='td-content-pic'>
-                                    <img className='mealPic' src={`http://localhost:8080/${meal.imagePath}`} alt='' />
+                                    <img className='mealPic' src={`${process.env.REACT_APP_API_BASE_URL}/${meal.imagePath}`} alt='' />
                                 </td>
                                 <td className='td-content'>{meal.name}</td>
                                 <td className='td-content'>{meal.mealType.typeName}</td>

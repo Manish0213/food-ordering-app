@@ -89,7 +89,7 @@ const FinalOrderByIdComponent = () => {
                 </div>
                 <div className='info-container'>
                     <label className='label-desc'>Price:</label>
-                    <label className='label-content'>{finalOrder.finalPrice},00 RSD</label>
+                    <label className='label-content'>{finalOrder.finalPrice}.00 Rs</label>
                 </div>
                 <div className='info-container'>
                     <label className='label-desc'>Date:</label>

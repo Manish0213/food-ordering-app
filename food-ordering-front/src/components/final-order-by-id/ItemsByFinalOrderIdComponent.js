@@ -24,7 +24,7 @@ const ItemsByFinalOrderIdComponent = (props) => {
                     {orderItems.map(
                         orderItem => <tr key={orderItem.mealId}>
                             <td className='td-content-img'>
-                              <img className='mealPicModal' src={`http://localhost:8080/${orderItem.mealImagePath}`} alt=''/> 
+                              <img className='mealPicModal' src={`${process.env.REACT_APP_API_BASE_URL}/${orderItem.mealImagePath}`} alt=''/> 
                             </td>
                             <td>{orderItem.mealName}</td>
                             <td>{orderItem.mealTypeName}</td>

@@ -24,7 +24,7 @@ const getAllMealTypes = () =>{
             mealTypes.map((mealType) => {
                 return(
                     <div className='card-meal-type' key={mealType.id}>   
-                        <img className='image' src={`http://localhost:8080/${mealType.imagePath}`} alt=''></img>     
+                        <img className='image' src={`${process.env.REACT_APP_API_BASE_URL}/${mealType.imagePath}`} alt=''></img>     
                         <div className='name-container'>
                             <h4 className='name-content'>{mealType.typeName}</h4>
                         </div>
