@@ -102,10 +102,9 @@ public class MealTypeServiceImpl implements MealTypeService{
 		mt.setTypeName(mealType.getTypeName());
 		mt.setDescription(mealType.getDescription());
 
-		// ✅ If image is also sent for update (not null)
-		if (mealType.getImage() != null && !mealType.getImage().isEmpty()) {
-			mt.setImage(mealType.getImage()); // base64 string
-			mt.setImageName(mealType.getImageName());
+		// ✅ Update imagePath only if new image uploaded
+		if (mealType.getImagePath() != null && !mealType.getImagePath().isEmpty()) {
+			mt.setImagePath(mealType.getImagePath());
 		}
 
 		mealTypeRepository.save(mt);

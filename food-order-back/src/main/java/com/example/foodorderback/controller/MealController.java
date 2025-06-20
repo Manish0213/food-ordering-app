@@ -1,6 +1,10 @@
 package com.example.foodorderback.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.List;
 
@@ -52,30 +56,45 @@ public class MealController {
 	//, @RequestParam("meal") MultipartFile meal
 	@RequestMapping(value = "/createMeal", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> createMeal(@RequestParam("image") MultipartFile image, HttpServletRequest request) {
-		
-		System.out.println(request.getParameter("meal"));	
-		Gson g = new Gson();  
+
+		System.out.println(request.getParameter("meal"));
+		Gson g = new Gson();
 		Meal meal = g.fromJson(request.getParameter("meal"), Meal.class);
 		System.out.println("MEAL " + meal);
-		
+
 		String responseToClient;
 		responseToClient = mealService.isValidInput(meal);
-		if (!(responseToClient.equals("valid"))) {
-			return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
+
+		if (!responseToClient.equals("valid")) {
+			return new ResponseEntity<>(responseToClient, HttpStatus.OK);
 		}
-		else {
-			try {
-				meal.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-				meal.setImageName(image.getOriginalFilename());
-				responseToClient = mealService.save(meal);
-				return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
-			} catch (IOException e) {
-				responseToClient = "fail";
-				return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
+
+		try {
+			// Save image to filesystem
+			String uploadDir = "uploads/mealImages/";
+			String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+			Path uploadPath = Paths.get(uploadDir);
+
+			if (!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
 			}
+
+			Path filePath = uploadPath.resolve(fileName);
+			Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+			// Set only path in DB
+			meal.setImagePath(uploadDir + fileName);
+
+			responseToClient = mealService.save(meal);
+			return new ResponseEntity<>(responseToClient, HttpStatus.OK);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+
 //	@RequestMapping(value = "/updateMeal", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<String> editMeal(@RequestBody Meal meal){
 //		String response = mealService.editMeal(meal);
@@ -93,19 +112,32 @@ public class MealController {
 
 		String response;
 
-		// ✅ Optional image update
 		try {
+			// ✅ Save new image to file system if provided
 			if (image != null && !image.isEmpty()) {
-				meal.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-				meal.setImageName(image.getOriginalFilename());
+				String uploadDir = "uploads/mealImages/";
+				String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+				Path uploadPath = Paths.get(uploadDir);
+
+				if (!Files.exists(uploadPath)) {
+					Files.createDirectories(uploadPath);
+				}
+
+				Path filePath = uploadPath.resolve(fileName);
+				Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+				// Set image path in meal
+				meal.setImagePath(uploadDir + fileName);
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		response = mealService.editMeal(meal);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 
 	@RequestMapping(value = "/deleteMeal/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> delete(@PathVariable Long id) {

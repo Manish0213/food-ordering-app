@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.foodorderback.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,6 @@ import com.example.foodorderback.dto.FinalOrderDTO;
 import com.example.foodorderback.dto.FinalOrderIdAndStatusDTO;
 import com.example.foodorderback.dto.ItemFromCartDTO;
 import com.example.foodorderback.dto.OrderItemDTO;
-import com.example.foodorderback.model.FinalOrder;
-import com.example.foodorderback.model.OrderItem;
-import com.example.foodorderback.model.Status;
-import com.example.foodorderback.model.User;
 import com.example.foodorderback.repository.FinalOrderRepository;
 import com.example.foodorderback.repository.OrderItemRepository;
 import com.example.foodorderback.service.FinalOrderService;
@@ -150,51 +147,103 @@ public class FinalOrderServiceImpl implements FinalOrderService{
 		return finalOrderRepository.save(finalOrder);
 	}
 	
+//	@Override
+//	public Long makeFinalOrder(OrderItemDTO orderItemDTO) {
+//		Long finalOrderId = (long) 0;
+//		try {
+//			//List<OrderItem> orderItems = new ArrayList<OrderItem>();
+//			FinalOrder finalOrder = new FinalOrder();
+//			finalOrder.setDate(new Date());
+//			finalOrder.setStatus("ORDERED");
+//			finalOrder.setFinalPrice(orderItemDTO.getFinalPrice());
+//
+//			if(userService.getCurrentUser()!=null) {
+//				User loggedUser = userService.getCurrentUser();
+//				finalOrder.setAddress(loggedUser.getAddress());
+//				finalOrder.setPhoneNumber(loggedUser.getPhoneNumber());
+//				finalOrder.setUser(loggedUser);
+//				finalOrder.setFinalPrice(orderItemDTO.getFinalPrice());
+//			}else {
+//				finalOrder.setAddress(orderItemDTO.getAddress());
+//				finalOrder.setPhoneNumber(orderItemDTO.getPhoneNumber());
+//			}
+//			FinalOrder savedFinalOrder = save(finalOrder);
+//			finalOrderId = savedFinalOrder.getId();
+//
+//			for(ItemFromCartDTO itc: orderItemDTO.getItemsFromCart()) {
+//				OrderItem orderItem = new OrderItem();
+//				orderItem.setMeal(mealService.findOne(itc.getMealId()));
+//				orderItem.setMealDescription(itc.getMealDescription());
+//				//ne cuvam sliku u bazi prilikom kreiranja order item-a da ne bih punio bazu sa slikama jer dosta zauzimaju ako budem radio deployment
+//				//umesto toga slika ce se ucitavati iz meal tabele prilikom slanja orderItem-a klijentu
+//				//orderItem.setMealImage(itc.getMealImage());
+//				orderItem.setMealImageName(itc.getMealImageName());
+//				orderItem.setMealName(itc.getMealName());
+//				orderItem.setMealPrice(itc.getMealPrice());
+//				orderItem.setMealTypeName(itc.getMealTypeName());
+//
+//				orderItem.setQuantity(itc.getQuantity());
+//				orderItem.setFinalOrder(savedFinalOrder);
+//				orderItemRepository.save(orderItem);
+//				}
+//		} catch (Exception e) {
+//			finalOrderId = (long) 0;
+//		}
+//		return finalOrderId;
+//	}
+
 	@Override
 	public Long makeFinalOrder(OrderItemDTO orderItemDTO) {
-		Long finalOrderId = (long) 0;
+		Long finalOrderId = 0L;
+
 		try {
-			//List<OrderItem> orderItems = new ArrayList<OrderItem>();
 			FinalOrder finalOrder = new FinalOrder();
 			finalOrder.setDate(new Date());
 			finalOrder.setStatus("ORDERED");
 			finalOrder.setFinalPrice(orderItemDTO.getFinalPrice());
-			
-			if(userService.getCurrentUser()!=null) {
+
+			if (userService.getCurrentUser() != null) {
 				User loggedUser = userService.getCurrentUser();
 				finalOrder.setAddress(loggedUser.getAddress());
 				finalOrder.setPhoneNumber(loggedUser.getPhoneNumber());
 				finalOrder.setUser(loggedUser);
-				finalOrder.setFinalPrice(orderItemDTO.getFinalPrice());
-			}else {
+			} else {
 				finalOrder.setAddress(orderItemDTO.getAddress());
 				finalOrder.setPhoneNumber(orderItemDTO.getPhoneNumber());
-			}			
+			}
+
 			FinalOrder savedFinalOrder = save(finalOrder);
 			finalOrderId = savedFinalOrder.getId();
-			
-			for(ItemFromCartDTO itc: orderItemDTO.getItemsFromCart()) {
+
+			for (ItemFromCartDTO itc : orderItemDTO.getItemsFromCart()) {
 				OrderItem orderItem = new OrderItem();
-				orderItem.setMeal(mealService.findOne(itc.getMealId()));
-				orderItem.setMealDescription(itc.getMealDescription());
-				//ne cuvam sliku u bazi prilikom kreiranja order item-a da ne bih punio bazu sa slikama jer dosta zauzimaju ako budem radio deployment
-				//umesto toga slika ce se ucitavati iz meal tabele prilikom slanja orderItem-a klijentu
-				//orderItem.setMealImage(itc.getMealImage());
-				orderItem.setMealImageName(itc.getMealImageName());
+
+				// 🔄 Get Meal object from DB
+				Meal meal = mealService.findOne(itc.getMealId());
+
+				orderItem.setMeal(meal); // optional reference
 				orderItem.setMealName(itc.getMealName());
 				orderItem.setMealPrice(itc.getMealPrice());
+				orderItem.setMealDescription(itc.getMealDescription());
 				orderItem.setMealTypeName(itc.getMealTypeName());
-				
 				orderItem.setQuantity(itc.getQuantity());
+
+				// ✅ Set image path from Meal entity
+				orderItem.setMealImagePath(meal.getImagePath());
+
 				orderItem.setFinalOrder(savedFinalOrder);
-				orderItemRepository.save(orderItem);	
-				}
+
+				orderItemRepository.save(orderItem);
+			}
+
 		} catch (Exception e) {
-			finalOrderId = (long) 0;
+			e.printStackTrace();
+			finalOrderId = 0L;
 		}
-		return finalOrderId;	
+
+		return finalOrderId;
 	}
-	
+
 	@Override
 	public String setFinalOrderToDelivered(Long finalOrderId) {
 		String responseToClient = "fail";

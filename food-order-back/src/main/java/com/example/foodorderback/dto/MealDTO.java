@@ -11,8 +11,7 @@ public class MealDTO {
 // 	private String mealTypeName;
  	private String name;
  	private int price;
- 	private String image;
- 	private String imageName;
+ 	private String imagePath;
  	private String description;
 
 	public MealDTO() {
@@ -26,18 +25,9 @@ public class MealDTO {
  		this.mealType = meal.getMealType();
  		this.name = meal.getName();
  		this.price = meal.getPrice();
- 		this.image = meal.getImage();
- 		this.imageName = meal.getImageName();
+ 		this.imagePath = meal.getImagePath();
  		this.description = meal.getDescription();
  	}
- 	
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public String getDescription() {
 		return description;
@@ -53,14 +43,6 @@ public class MealDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
 	}
 
 	public Long getId() {
@@ -87,4 +69,11 @@ public class MealDTO {
 		this.price = price;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 }

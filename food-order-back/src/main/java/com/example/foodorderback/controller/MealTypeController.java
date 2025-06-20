@@ -1,6 +1,10 @@
 package com.example.foodorderback.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.List;
 
@@ -38,56 +42,85 @@ public class MealTypeController {
 		List<MealTypeDTO> allMealTypeDTOList = mealTypeService.getAllMealTypes();
 		return new ResponseEntity<List<MealTypeDTO>>(allMealTypeDTOList, HttpStatus.OK);
 	}
-	
-	
+
 	@RequestMapping(value = "/createMealType", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> createMeal(@RequestParam("image") MultipartFile image, HttpServletRequest request) {
-		
-		System.out.println(request.getParameter("mealType"));
-			
-		Gson g = new Gson();  
-		MealType mealType = g.fromJson(request.getParameter("mealType"), MealType.class);
+
+		Gson gson = new Gson();
+		MealType mealType = gson.fromJson(request.getParameter("mealType"), MealType.class);
 
 		String responseToClient;
-		responseToClient = mealTypeService.isValidInput(mealType);
-		if (responseToClient.equals("valid")) {		
-			try {
-				mealType.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-				mealType.setImageName(image.getOriginalFilename());
-				responseToClient = mealTypeService.save(mealType);
-			} catch (IOException e) {
-				responseToClient = "fail";
-			}
-			return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
 
-		} else {
-			responseToClient = "invalid";
-			return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
+		responseToClient = mealTypeService.isValidInput(mealType);
+		if (!responseToClient.equals("valid")) {
+			return new ResponseEntity<>("invalid", HttpStatus.OK);
 		}
+
+		try {
+			// Step 1: Save the image to the local filesystem
+			String uploadDir = "uploads/mealTypeImages/";
+			String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename(); // Unique file name
+			Path uploadPath = Paths.get(uploadDir);
+
+			if (!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
+			}
+
+			Path filePath = uploadPath.resolve(fileName);
+			Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+			// Step 2: Save only the relative path to DB
+			mealType.setImagePath(uploadDir + fileName);
+
+			responseToClient = mealTypeService.save(mealType);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<>(responseToClient, HttpStatus.OK);
 	}
-	
+
+
 //	@RequestMapping(value = "/updateMealType", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<String> editMealType(@RequestBody MealType mealType){
 //		String response = mealTypeService.editMealType(mealType);
 //		return new ResponseEntity<String>(response, HttpStatus.OK);
 //	}
 
+
 	@RequestMapping(value = "/updateMealType", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<String> editMealType(@RequestParam("image") MultipartFile image, HttpServletRequest request) {
-		System.out.println(request.getParameter("mealType"));
+	public ResponseEntity<String> updateMealType(
+			@RequestParam(value = "image", required = false) MultipartFile image,
+			HttpServletRequest request) {
+
 		Gson g = new Gson();
 		MealType mealType = g.fromJson(request.getParameter("mealType"), MealType.class);
-		String response;
-		try {
-			mealType.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-			mealType.setImageName(image.getOriginalFilename());
-			response = mealTypeService.editMealType(mealType);
-		} catch (IOException e) {
-			response = "fail";
-		}
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
 
+		try {
+			if (image != null && !image.isEmpty()) {
+				String uploadDir = "uploads/mealTypeImages/";
+				String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+				Path uploadPath = Paths.get(uploadDir);
+
+				if (!Files.exists(uploadPath)) {
+					Files.createDirectories(uploadPath);
+				}
+
+				Path filePath = uploadPath.resolve(fileName);
+				Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+				mealType.setImagePath(uploadDir + fileName); // ✅ Only path
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		String result = mealTypeService.editMealType(mealType);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 
 
 	@RequestMapping(value = "/deleteMealType/{id}", method = RequestMethod.PUT)
@@ -95,6 +128,5 @@ public class MealTypeController {
 		String responseToClient = mealTypeService.delete(id);;
 		return new ResponseEntity<String>(responseToClient, HttpStatus.OK);
 	}
-	
-	
+
 }

@@ -126,15 +126,15 @@ public class MealServiceImpl implements MealService {
 			m.setName(meal.getName());
 			m.setMealType(meal.getMealType());
 
-			// ✅ Optional image update
-			if (meal.getImage() != null && !meal.getImage().isEmpty()) {
-				m.setImage(meal.getImage());
-				m.setImageName(meal.getImageName());
+			// ✅ Only update image path if new image uploaded
+			if (meal.getImagePath() != null && !meal.getImagePath().isEmpty()) {
+				m.setImagePath(meal.getImagePath());
 			}
 
 			mealRepository.save(m);
 			return "success";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "fail";
 		}
 	}

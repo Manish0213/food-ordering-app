@@ -22,10 +22,7 @@ public class MealType {
 	
 	private String typeName;
 	
-	@Lob
-	private String image;
-	
-	private String imageName;
+	private String imagePath;
 	
 	private String description;
 	
@@ -40,14 +37,12 @@ public class MealType {
 		
 	}
 
-	public MealType(Long id, String typeName, String image, String imageName, String description) {
+	public MealType(Long id, String typeName, String imagePath, String description) {
 		super();
 		this.id = id;
 		this.typeName = typeName;
-		this.image = image;
-		this.imageName = imageName;
+		this.imagePath = imagePath;
 		this.description = description;
-		
 	} 
 	
 	public boolean isDeleted() {
@@ -58,36 +53,13 @@ public class MealType {
 		this.isDeleted = isDeleted;
 	}
 
-
-	public String getImageName() {
-		return imageName;
-	}
-
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-
-
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	public String getImage() {
-		return image;
-	}
-
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 
 	public Long getId() {
 		return id;
@@ -105,6 +77,14 @@ public class MealType {
 		this.typeName = typeName;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	/*public List<Meal> getMeals() {
 		return meals;
 	}
@@ -112,7 +92,4 @@ public class MealType {
 	public void setMeals(List<Meal> meals) {
 		this.meals = meals;
 	} */
-	
-	
-
 }

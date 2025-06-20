@@ -19,8 +19,7 @@ public class ItemFromCartDTO {
 	private String mealName;
 	private String mealTypeName;
 	private String mealDescription;
-	private String mealImage;
-	private String mealImageName;
+	private String mealImagePath;
 	private int mealPrice;
 	
 	private int quantity;
@@ -36,8 +35,8 @@ public class ItemFromCartDTO {
 		this.mealDescription = orderItem.getMealDescription();
 		//this.mealImage = orderItem.getMealImage();
 		// na ovaj nacin setujem sliku ako budem radio deployment jer necu da je cuvam u bazi svaki put prilikom kreiranja orderItema-a, uzimam iz meal objekta, jer ce se dosta memorije zauzimati verovatno
-		this.mealImage = orderItem.getMeal().getImage();
-		this.mealImageName = orderItem.getMealImageName();
+
+		this.mealImagePath = orderItem.getMealImagePath();
 		this.mealPrice = orderItem.getMealPrice();
 		
 		this.quantity = orderItem.getQuantity();
@@ -95,20 +94,12 @@ public class ItemFromCartDTO {
 		this.mealDescription = mealDescription;
 	}
 
-	public String getMealImage() {
-		return mealImage;
+	public String getMealImagePath() {
+		return mealImagePath;
 	}
 
-	public void setMealImage(String mealImage) {
-		this.mealImage = mealImage;
-	}
-
-	public String getMealImageName() {
-		return mealImageName;
-	}
-
-	public void setMealImageName(String mealImageName) {
-		this.mealImageName = mealImageName;
+	public void setMealImagePath(String mealImagePath) {
+		this.mealImagePath = mealImagePath;
 	}
 
 	public int getMealPrice() {

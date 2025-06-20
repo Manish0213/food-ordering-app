@@ -38,11 +38,7 @@ public class Meal {
  	private String name;
  	private int price;
  	
- 	@Lob
-	//@Column(columnDefinition = "MEDIUMBLOB")
-	private String image;
- 	
- 	private String imageName;
+ 	private String imagePath;
  	private String description;
  	private boolean isDeleted;
  	
@@ -52,13 +48,13 @@ public class Meal {
  		
  	}
 
-	public Meal(Long id, MealType mealType, String name, int price, String imageName) {
+	public Meal(Long id, MealType mealType, String name, int price, String imagePath) {
 		super();
 		this.id = id;
 		this.mealType = mealType;
 		this.name = name;
 		this.price = price;
-		this.imageName = imageName;
+		this.imagePath = imagePath;
 	}
 	
 	public boolean isDeleted() {
@@ -77,24 +73,8 @@ public class Meal {
 		this.description = description;
 	}
 
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-
 	public Long getId() {
 		return id;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public void setId(Long id) {
@@ -132,8 +112,12 @@ public class Meal {
 	public void setPrice(int price) {
 		this.price = price;
 	}
- 	
- 	
- 	
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 }

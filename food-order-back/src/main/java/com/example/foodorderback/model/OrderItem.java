@@ -26,10 +26,8 @@ public class OrderItem {
 	// mozda bi bilo bolje BigDecimal da se cuva u bazi umesto int
 	private int mealPrice;
 	private String mealDescription;
-	
-	@Lob
-	private String mealImage;
-	private String mealImageName;
+
+	private String mealImagePath;
 	private String mealTypeName;
 	
 	public String getMealTypeName() {
@@ -88,20 +86,12 @@ public class OrderItem {
 		this.mealDescription = mealDescription;
 	}
 
-	public String getMealImage() {
-		return mealImage;
+	public String getMealImagePath() {
+		return mealImagePath;
 	}
 
-	public void setMealImage(String mealImage) {
-		this.mealImage = mealImage;
-	}
-
-	public String getMealImageName() {
-		return mealImageName;
-	}
-
-	public void setMealImageName(String mealImageName) {
-		this.mealImageName = mealImageName;
+	public void setMealImagePath(String mealImagePath) {
+		this.mealImagePath = mealImagePath;
 	}
 
 	public void setId(Long id) {
