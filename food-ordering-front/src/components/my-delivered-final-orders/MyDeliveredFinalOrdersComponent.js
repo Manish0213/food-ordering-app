@@ -97,7 +97,7 @@ const MyDeliveredFinalOrdersComponent = () => {
                         </div>
                         <div id="finalpricecont" className='info-container final-price'>
                             <label className='label-desc'>Price:</label>
-                            <label className='label-content'>{activeFinalOrder.finalPrice},00 RSD</label>
+                            <label className='label-content'>{activeFinalOrder.finalPrice}.00 Rs</label>
                         </div>
                         <div id="datecont" className='info-container date'>
                             <label className='label-desc'>Date:</label>

@@ -18,7 +18,7 @@ const EditItemQuantityComponent = (props) => {
 
       <div className='meal-container'>
           <label className='label-meal-info'>Price:</label>
-          <label className='label-meal-value'>{itemFromCart?.mealPrice},00 RSD</label>
+          <label className='label-meal-value'>{itemFromCart?.mealPrice}.00 Rs</label>
       </div>              
     </div>
         

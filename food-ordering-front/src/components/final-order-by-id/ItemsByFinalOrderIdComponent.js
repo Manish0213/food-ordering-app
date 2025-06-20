@@ -24,12 +24,12 @@ const ItemsByFinalOrderIdComponent = (props) => {
                     {orderItems.map(
                         orderItem => <tr key={orderItem.mealId}>
                             <td className='td-content-img'>
-                              <img className='mealPicModal' src={"data:image/png;base64," + orderItem.mealImage} alt=''/> 
+                              <img className='mealPicModal' src={`http://localhost:8080/${orderItem.mealImagePath}`} alt=''/> 
                             </td>
                             <td>{orderItem.mealName}</td>
                             <td>{orderItem.mealTypeName}</td>
                             <td>{orderItem.mealDescription}</td>
-                            <td>{orderItem.mealPrice},00 RSD</td>
+                            <td>{orderItem.mealPrice}.00 Rs</td>
                             <td>{orderItem.quantity}</td>
                         </tr>
                     )}

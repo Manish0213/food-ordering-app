@@ -21,13 +21,12 @@ const ListMealByMealTypeComponent = () => {
     const [id, setId] = useState(0);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [image, setImage] = useState('');
     const [mealType, setMealType] = useState(undefined);
-    const [imageName, setImageName] = useState('');
+    const [imagePath, setImagePath] = useState('');
 
     const [description, setDescription] = useState('');
 
-    const meal = { id, name, mealType, price, image };
+    const meal = { id, name, mealType, price, imagePath };
     // const meal = {id, name, price, image};
 
     // const orderItem = {mealFromCartDTO, quantity: mealQuantity};
@@ -56,8 +55,7 @@ const ListMealByMealTypeComponent = () => {
         
         setMealType(meal.mealType)
         // setMealType(meal.mealType.typeName);
-        setImage(meal.image);
-        setImageName(meal.imageName);
+        setImagePath(meal.imagePath);
         setDescription(meal.description);
         setMealQuantity(1);
         setShow(true);
@@ -68,8 +66,7 @@ const ListMealByMealTypeComponent = () => {
         setId(null);
         setName('');
         setPrice('');
-        setImage('');
-        setImageName('');
+        setImagePath('');
         setDescription('');
         setMealType(undefined);
         setMealQuantity(1);
@@ -77,6 +74,7 @@ const ListMealByMealTypeComponent = () => {
 
     const getMealsByMealTypeId = () => {
         MealService.getMealsByMealTypeId(mealTypeId).then((response) => {
+            console.log("meal type data by id"+JSON.stringify(response.data));
             setMeals(response.data);
             setDataFetchingComplete(true);
             console.log("meals" + JSON.stringify(response.data));
@@ -87,7 +85,8 @@ const ListMealByMealTypeComponent = () => {
 
     const handleAddItemToCart = () => {
         // console.log("orderitem" + JSON.stringify(orderItem));
-        let orderItem = { mealId: id, mealName: name, mealTypeName: mealType.typeName, mealDescription: description, mealImage: image, mealImageName: imageName, mealPrice: price, quantity: mealQuantity };
+        let orderItem = { mealId: id, mealName: name, mealTypeName: mealType.typeName, mealDescription: description, mealImage: imagePath, mealPrice: price, quantity: mealQuantity };
+        console.log("orderItem", JSON.stringify(orderItem));
         if (orderItem.quantity > 0) {
             dispatch(addItem(orderItem));
             alertSuccess('Successfully added item to cart!');
@@ -136,14 +135,14 @@ const ListMealByMealTypeComponent = () => {
                         meals.map((meal) => {
                             return (
                                 <div className='card-meals-by-meal-type' key={meal.id}>
-                                    <img className='image' src={"data:image/png;base64," + meal.image} alt=''></img>
+                                    <img className='image' src={`http://localhost:8080/${meal.imagePath}`} alt=''></img>
                                     <div className='name-container'>
                                         <h4 className='name-content'>{meal.name}</h4>
                                     </div>
                                     <div className='meal-info-container'>
                                         {/* <div>{meal.mealType.typeName}</div> */}
                                         <div className='meal-description'>{meal.description}</div>
-                                        <div className='meal-price'>{meal.price},00 RSD</div>
+                                        <div className='meal-price'>{meal.price}.00 Rs</div>
                                     </div>
                                     <button className='btn-add-to-cart' onClick={() => handleShowMealQuantity(meal)}>
                                         Add to cart

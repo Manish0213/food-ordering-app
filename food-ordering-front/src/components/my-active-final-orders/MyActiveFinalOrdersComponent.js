@@ -40,7 +40,7 @@ const MyActiveFinalOrdersComponent = () => {
         MealService.getOrderItemsByFinalOrderId(finalOrderId).then((response) =>{
             //alert("RESPONSE ORDER ITEMS " + JSON.stringify(response.data));
             setOrderItemsByFinalOrderId(response.data);     
-            console.log('s');
+            console.log('s',response.data);
         }).catch(error =>{
             console.log(error);
         })
@@ -96,7 +96,7 @@ const MyActiveFinalOrdersComponent = () => {
                         </div>
                         <div id="finalpricecont" className='info-container final-price'>
                             <label className='label-desc'>Price:</label>
-                            <label className='label-content'>{activeFinalOrder.finalPrice},00 RSD</label>
+                            <label className='label-content'>{activeFinalOrder.finalPrice}.00 Rs</label>
                         </div>
                         <div id="datecont" className='info-container date'>
                             <label className='label-desc'>Date:</label>

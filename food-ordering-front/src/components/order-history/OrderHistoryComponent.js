@@ -118,12 +118,12 @@ const OrderHistoryComponent = () => {
                         <td className='td-content'>{activeFinalOrder.phoneNumber}</td>
                         <td className='td-content'> {Moment(activeFinalOrder.date).format("YYYY-MM-DD HH:mm:ss") } </td>
                         <td className='td-content'>{activeFinalOrder.status}</td>
-                        <td className='td-content'>{activeFinalOrder.finalPrice},00</td>    
+                        <td className='td-content'>{activeFinalOrder.finalPrice}.00</td>    
                         <td className='td-content'>
                             <button className='btn btn-success' onClick={() => handleShowItemsByFinalOrderId(activeFinalOrder.id)}>Show items</button>
                         </td>
                         <td className='td-content'>                 
-                            {localStorage.role === "ADMIN" && <button className='btn btn-danger' onClick={() => alertAreYouSureDelete(activeFinalOrder.id)}
+                            {localStorage.role === "ADMIN" || localStorage.role === "EMPLOYEE" && <button className='btn btn-danger' onClick={() => alertAreYouSureDelete(activeFinalOrder.id)}
                                 style={{marginLeft:"5px"}}>Delete</button>}
                         </td> 
                     </tr>

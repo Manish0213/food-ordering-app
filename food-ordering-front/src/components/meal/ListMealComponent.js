@@ -16,8 +16,7 @@ const ListMealComponent = () => {
     const [id, setId] = useState(0);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [image, setImage] = useState('');
-    const [imageName, setImageName] = useState('');
+    const [imagePath, setImagePath] = useState('');
 
     // const [mealType, setMealType] = useState({id: 1, typeName: 'PIZZA'});
     const [mealType, setMealType] = useState(undefined);
@@ -31,7 +30,7 @@ const ListMealComponent = () => {
 
     const file = { selectedFile, setSelectedFile };
 
-    const meal = { id, name, price, image, imageName, mealType, description, setDescription, setName, setPrice, setImage, setImageName, setMealType }
+    const meal = { id, name, price, imagePath, mealType, description, setDescription, setName, setPrice, setImagePath, setMealType }
 
     useEffect(() => {
         getAllMeals();
@@ -197,7 +196,7 @@ const ListMealComponent = () => {
                             meal => <tr key={meal.id}>
                                 <td className='td-content'>{meal.id}</td>
                                 <td className='td-content-pic'>
-                                    <img className='mealPic' src={"data:image/png;base64," + meal.image} alt='' />
+                                    <img className='mealPic' src={`http://localhost:8080/${meal.imagePath}`} alt='' />
                                 </td>
                                 <td className='td-content'>{meal.name}</td>
                                 <td className='td-content'>{meal.mealType.typeName}</td>

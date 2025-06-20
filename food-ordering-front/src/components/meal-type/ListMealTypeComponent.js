@@ -15,8 +15,7 @@ const ListMealTypeComponent = () => {
     const [id, setId] = useState(0);
     const [typeName, setTypeName] = useState('');
     
-    const [image, setImage] = useState('');
-    const [imageName, setImageName] = useState('');
+    const [imagePath, setImagePath] = useState('');
     const [description, setDescription] = useState('');
 
     const [show, setShow] = useState(false);
@@ -26,7 +25,7 @@ const ListMealTypeComponent = () => {
 
     const file = {selectedFile, setSelectedFile};
 
-    const mealType = {id, typeName, description, image, imageName,  setImage, setImageName, setTypeName, setDescription}
+    const mealType = {id, typeName, description, imagePath, setImagePath , setTypeName, setDescription}
 
     useEffect(() => {
       getAllMealTypes();
@@ -34,6 +33,7 @@ const ListMealTypeComponent = () => {
     
     const getAllMealTypes = () =>{
         MealTypeService.getAllMealTypes().then((response) =>{
+            console.log("fetch All MealType",response.data);
             setMealTypes(response.data);
             sortMealTypesById();
         }).catch(error =>{
@@ -177,7 +177,7 @@ const ListMealTypeComponent = () => {
                         mealType => <tr key={mealType.id}>
                             <td className='td-content'>{mealType.id}</td>
                             <td className='td-content-img'>                           
-                              <img className='mealPic' src={"data:image/png;base64," + mealType.image} alt=''/>                         
+                              <img className='mealPic' src={`http://localhost:8080/${mealType.imagePath}`} alt=''/>                         
                             </td>                               
                             <td className='td-content'>{mealType.typeName}</td>
                             <td className='td-content'>{mealType.description}</td>                                           

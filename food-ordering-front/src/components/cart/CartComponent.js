@@ -28,6 +28,7 @@ const CartComponent = () => {
   const [finalPrice, setFinalPrice] = useState(0);
 
   const itemsFromCart = useSelector((state) => state.cart);
+  console.log("itemsFromCard", itemsFromCart);
   const itemsFromCartFinalOrder = { itemsFromCart, address, phoneNumber, finalPrice, setAddress, setPhoneNumber };
 
   let itemsFromCartData;
@@ -133,12 +134,12 @@ const CartComponent = () => {
         setFinalPrice(finalPriceVar);
         let textStr;
         if(localStorage.token === null || localStorage.token === undefined){
-          textStr = "Final price is: "+ finalPriceVar.toFixed(2) + " RSD! If you click yes, you will make final order!";
+          textStr = "Final price is: "+ finalPriceVar.toFixed(2) + " Rs! If you click yes, you will make final order!";
           itemsFromCartData = { itemsFromCart, address, phoneNumber, finalPrice: finalPriceVar};
           
         }
         else{
-          textStr = "Final price is: "+ finalPriceVar.toFixed(2) + " RSD (10% OFF)! If you click yes, you will make final order!";
+          textStr = "Final price is: "+ finalPriceVar.toFixed(2) + " Rs! If you click yes, you will make final order!";
           itemsFromCartData = { itemsFromCart, finalPrice: finalPriceVar};
         }
         Swal.fire({
@@ -191,7 +192,7 @@ const CartComponent = () => {
         }
         else{
           for(let i=0; i<itemsFromCart.length; i++){
-            finalPriceVar += (itemsFromCart[i].mealPrice)*0.9*itemsFromCart[i].quantity;
+            finalPriceVar += (itemsFromCart[i].mealPrice)*itemsFromCart[i].quantity;
           }
         }
       }
@@ -245,7 +246,7 @@ const CartComponent = () => {
           return(
             <div className='cart-item-container'>
               <div className='item-image-container'>                  
-                <img className='item-meal-pic' src={"data:image/png;base64," + itemFromCart.mealImage} alt=''/>                   
+                <img className='item-meal-pic' src={`http://localhost:8080/${itemFromCart.mealImage}`} alt=''/>                   
               </div> 
               
               <div className='item-info-container'>
@@ -261,7 +262,7 @@ const CartComponent = () => {
                   {itemFromCart.mealDescription}
                 </div>
                 <div className='item-price'>
-                  {itemFromCart.mealPrice},00 RSD
+                  {itemFromCart.mealPrice}.00 Rs
                 </div>
                 <div className='item-quantity'>
                   x{itemFromCart.quantity}

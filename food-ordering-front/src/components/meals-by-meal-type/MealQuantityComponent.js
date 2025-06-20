@@ -17,7 +17,7 @@ const MealQuantityComponent = (props) => {
 
               <div className='meal-container'>
                   <label className='label-meal-info'>Price:</label>
-                  <label className='label-meal-value'>{meal.price},00 RSD</label>
+                  <label className='label-meal-value'>{meal.price}.00 Rs</label>
               </div>              
             </div>
                 
